@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎉 New Year Trip Budget</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --peach: #FFDAB9;
+    --peach-dark: #f5c49a;
+    --peach-deeper: #e8a87c;
+    --cream: #fff8f3;
+    --brown: #6b3a2a;
+    --brown-light: #a0522d;
+    --accent: #c0392b;
+    --green: #27ae60;
+    --white: #fff;
+    --shadow: 0 4px 24px rgba(107,58,42,0.13);
+    --radius: 18px;
+  }
+
+- { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: ‘DM Sans’, sans-serif;
+background: var(–peach);
+min-height: 100vh;
+position: relative;
+overflow-x: hidden;
+}
+
+/* Cocktail emoji pattern background */
+.bg-pattern {
+position: fixed;
+inset: 0;
+pointer-events: none;
+z-index: 0;
+overflow: hidden;
+}
+.bg-pattern span {
+position: absolute;
+font-size: 2rem;
+opacity: 0.13;
+user-select: none;
+animation: floatEmoji linear infinite;
+}
+
+@keyframes floatEmoji {
+0% { transform: translateY(0) rotate(0deg); }
+100% { transform: translateY(-120vh) rotate(360deg); }
+}
+
+.app {
+position: relative;
+z-index: 1;
+max-width: 480px;
+margin: 0 auto;
+padding: 0 0 80px;
+}
+
+header {
+background: linear-gradient(135deg, var(–brown) 0%, var(–brown-light) 100%);
+color: var(–peach);
+padding: 28px 24px 20px;
+text-align: center;
+border-radius: 0 0 28px 28px;
+box-shadow: var(–shadow);
+margin-bottom: 20px;
+}
+
+header h1 {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.7rem;
+font-weight: 900;
+letter-spacing: -0.5px;
+margin-bottom: 2px;
+}
+
+header p {
+font-size: 0.82rem;
+opacity: 0.8;
+letter-spacing: 1px;
+text-transform: uppercase;
+}
+
+/* Tab Bar */
+.tab-bar {
+display: flex;
+background: var(–cream);
+border-radius: 50px;
+padding: 4px;
+margin: 0 18px 20px;
+box-shadow: var(–shadow);
+}
+
+.tab-btn {
+flex: 1;
+border: none;
+background: transparent;
+padding: 10px 0;
+border-radius: 50px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 0.88rem;
+font-weight: 600;
+color: var(–brown-light);
+cursor: pointer;
+transition: all 0.25s;
+}
+
+.tab-btn.active {
+background: var(–brown);
+color: var(–peach);
+box-shadow: 0 2px 12px rgba(107,58,42,0.25);
+}
+
+/* Cards */
+.section-card {
+background: var(–white);
+border-radius: var(–radius);
+margin: 0 14px 14px;
+box-shadow: var(–shadow);
+overflow: hidden;
+transition: transform 0.18s;
+}
+
+.section-card:active { transform: scale(0.985); }
+
+.section-header {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 14px 16px 10px;
+background: linear-gradient(90deg, var(–peach) 0%, var(–cream) 100%);
+border-bottom: 1px solid #f0e0d0;
+}
+
+.section-icon {
+font-size: 1.5rem;
+cursor: pointer;
+}
+
+.section-title-area { flex: 1; }
+
+.section-title {
+font-family: ‘Playfair Display’, serif;
+font-size: 1rem;
+font-weight: 700;
+color: var(–brown);
+border: none;
+background: transparent;
+width: 100%;
+outline: none;
+cursor: pointer;
+}
+
+.section-title:focus {
+border-bottom: 2px solid var(–brown-light);
+}
+
+.shared-badge {
+font-size: 0.72rem;
+color: var(–brown-light);
+background: var(–peach-dark);
+padding: 2px 8px;
+border-radius: 20px;
+white-space: nowrap;
+}
+
+.section-total {
+font-weight: 700;
+font-size: 0.9rem;
+color: var(–brown);
+white-space: nowrap;
+}
+
+/* Items */
+.items-list { padding: 8px 0 4px; }
+
+.item-row {
+display: flex;
+align-items: center;
+padding: 7px 16px;
+gap: 8px;
+border-bottom: 1px solid #fdf0e8;
+transition: background 0.15s;
+}
+
+.item-row:last-child { border-bottom: none; }
+.item-row:hover { background: #fffaf6; }
+
+.item-name {
+flex: 1;
+font-size: 0.87rem;
+color: #555;
+border: none;
+background: transparent;
+outline: none;
+font-family: ‘DM Sans’, sans-serif;
+}
+
+.item-name:focus { border-bottom: 1px dashed var(–brown-light); }
+
+.item-amount {
+font-size: 0.87rem;
+font-weight: 600;
+color: var(–brown);
+border: none;
+background: transparent;
+outline: none;
+text-align: right;
+width: 80px;
+font-family: ‘DM Sans’, sans-serif;
+}
+
+.item-amount:focus { border-bottom: 1px dashed var(–brown-light); }
+
+.del-btn {
+background: none;
+border: none;
+color: #e0a090;
+font-size: 1rem;
+cursor: pointer;
+padding: 0 2px;
+line-height: 1;
+}
+
+.del-btn:hover { color: var(–accent); }
+
+.add-item-row {
+display: flex;
+gap: 6px;
+padding: 8px 14px 10px;
+align-items: center;
+}
+
+.add-item-row input {
+flex: 1;
+border: 1px dashed var(–peach-deeper);
+border-radius: 8px;
+padding: 6px 10px;
+font-size: 0.83rem;
+font-family: ‘DM Sans’, sans-serif;
+outline: none;
+background: var(–cream);
+color: var(–brown);
+}
+
+.add-item-row input:focus { border-color: var(–brown-light); }
+
+.add-btn {
+background: var(–brown);
+color: var(–peach);
+border: none;
+border-radius: 8px;
+padding: 6px 12px;
+font-size: 0.82rem;
+font-weight: 600;
+cursor: pointer;
+white-space: nowrap;
+}
+
+.add-btn:hover { background: var(–brown-light); }
+
+/* Shared count editor */
+.shared-editor {
+display: flex;
+align-items: center;
+gap: 4px;
+}
+
+.shared-count-input {
+width: 36px;
+border: 1px solid var(–peach-deeper);
+border-radius: 6px;
+text-align: center;
+font-size: 0.78rem;
+font-weight: 600;
+padding: 2px 4px;
+color: var(–brown);
+background: var(–cream);
+outline: none;
+}
+
+/* Locked rows */
+.locked-row {
+display: flex;
+align-items: center;
+padding: 8px 16px;
+gap: 8px;
+border-bottom: 1px solid #fdf0e8;
+}
+
+.locked-row .item-name { color: #888; font-style: italic; }
+
+/* Summary */
+.summary-card {
+background: linear-gradient(135deg, var(–brown) 0%, var(–brown-light) 100%);
+border-radius: var(–radius);
+margin: 0 14px 14px;
+padding: 18px 20px;
+color: var(–peach);
+box-shadow: var(–shadow);
+}
+
+.summary-card h3 {
+font-family: ‘Playfair Display’, serif;
+font-size: 1rem;
+margin-bottom: 12px;
+opacity: 0.85;
+text-transform: uppercase;
+letter-spacing: 1px;
+font-size: 0.78rem;
+}
+
+.summary-row {
+display: flex;
+justify-content: space-between;
+font-size: 0.87rem;
+margin-bottom: 6px;
+opacity: 0.9;
+}
+
+.summary-total {
+display: flex;
+justify-content: space-between;
+font-family: ‘Playfair Display’, serif;
+font-size: 1.25rem;
+font-weight: 700;
+margin-top: 10px;
+padding-top: 10px;
+border-top: 1px solid rgba(255,218,185,0.3);
+}
+
+/* My Budget View */
+.mb-header {
+text-align: center;
+padding: 6px 24px 18px;
+}
+.mb-header h2 {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.45rem;
+font-weight: 900;
+color: var(–brown);
+margin-bottom: 4px;
+}
+.mb-header p {
+font-size: 0.83rem;
+color: var(–brown-light);
+}
+
+.mb-section-card {
+display: flex;
+align-items: center;
+gap: 14px;
+background: var(–white);
+border-radius: 18px;
+padding: 16px 18px;
+margin: 0 14px 12px;
+box-shadow: var(–shadow);
+cursor: pointer;
+border: 2.5px solid transparent;
+transition: all 0.22s;
+user-select: none;
+}
+
+.mb-section-card.locked {
+border-color: #b8dfc5;
+background: #f5fdf8;
+cursor: default;
+}
+
+.mb-section-card.selected {
+border-color: #27ae60;
+background: #f5fdf8;
+}
+
+.mb-section-card:not(.locked):not(.selected):hover {
+border-color: var(–peach-dark);
+}
+
+.mb-section-icon {
+font-size: 2rem;
+flex-shrink: 0;
+width: 44px;
+text-align: center;
+}
+
+.mb-section-info { flex: 1; min-width: 0; }
+
+.mb-section-title {
+font-weight: 700;
+font-size: 1rem;
+color: var(–brown);
+margin-bottom: 2px;
+}
+
+.mb-section-sub {
+font-size: 0.78rem;
+color: #888;
+}
+
+.mb-section-sub.locked-sub {
+color: var(–green);
+font-weight: 600;
+}
+
+.mb-section-right {
+text-align: right;
+flex-shrink: 0;
+}
+
+.mb-share-amount {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.1rem;
+font-weight: 700;
+color: var(–accent);
+white-space: nowrap;
+}
+
+.mb-share-label {
+font-size: 0.72rem;
+color: #aaa;
+}
+
+.mb-toggle {
+width: 26px;
+height: 26px;
+border-radius: 50%;
+border: 2px solid #ccc;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-shrink: 0;
+transition: all 0.2s;
+font-size: 0.9rem;
+}
+
+.mb-section-card.selected .mb-toggle,
+.mb-section-card.locked .mb-toggle {
+background: #f6a623;
+border-color: #f6a623;
+color: white;
+}
+
+/* People stepper in My Budget */
+.mb-stepper {
+display: flex;
+align-items: center;
+gap: 0;
+margin-top: 6px;
+}
+.mb-stepper-btn {
+width: 26px;
+height: 26px;
+border-radius: 50%;
+border: 1.5px solid var(–peach-deeper);
+background: var(–cream);
+color: var(–brown);
+font-size: 1rem;
+font-weight: 700;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+line-height: 1;
+transition: all 0.15s;
+flex-shrink: 0;
+}
+.mb-stepper-btn:hover { background: var(–peach-dark); border-color: var(–brown-light); }
+.mb-stepper-count {
+font-size: 0.82rem;
+font-weight: 700;
+color: var(–brown);
+min-width: 48px;
+text-align: center;
+}
+/* Total card */
+.mb-total-card {
+background: #1a2540;
+border-radius: 22px;
+margin: 4px 14px 14px;
+padding: 22px 24px 18px;
+box-shadow: 0 8px 32px rgba(26,37,64,0.22);
+color: white;
+}
+
+.mb-total-label {
+font-size: 0.72rem;
+text-transform: uppercase;
+letter-spacing: 2px;
+opacity: 0.65;
+text-align: center;
+margin-bottom: 6px;
+}
+
+.mb-total-amount {
+font-family: ‘Playfair Display’, serif;
+font-size: 2.6rem;
+font-weight: 900;
+color: #f6a623;
+text-align: center;
+line-height: 1;
+margin-bottom: 14px;
+}
+
+.mb-total-breakdown {
+border-top: 1px solid rgba(255,255,255,0.12);
+padding-top: 12px;
+}
+
+.mb-breakdown-row {
+display: flex;
+justify-content: space-between;
+font-size: 0.83rem;
+color: rgba(255,255,255,0.65);
+margin-bottom: 5px;
+}
+
+.mb-breakdown-row span:last-child {
+color: rgba(255,255,255,0.85);
+font-weight: 500;
+}
+
+/* Section label */
+.section-label {
+font-size: 0.72rem;
+text-transform: uppercase;
+letter-spacing: 1.5px;
+color: var(–brown-light);
+padding: 0 28px;
+margin-bottom: 8px;
+margin-top: 4px;
+}
+
+/* Admin Lock */
+.lock-overlay {
+position: fixed;
+inset: 0;
+background: rgba(26,37,64,0.55);
+backdrop-filter: blur(6px);
+z-index: 200;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 24px;
+}
+.lock-overlay.hidden { display: none; }
+
+.lock-card {
+background: white;
+border-radius: 24px;
+padding: 32px 28px;
+width: 100%;
+max-width: 340px;
+text-align: center;
+box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.lock-card h3 {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.4rem;
+color: var(–brown);
+margin-bottom: 6px;
+}
+.lock-card p {
+font-size: 0.83rem;
+color: #999;
+margin-bottom: 20px;
+}
+.lock-input {
+width: 100%;
+border: 2px solid var(–peach-dark);
+border-radius: 12px;
+padding: 13px 16px;
+font-size: 1.1rem;
+font-family: ‘DM Sans’, sans-serif;
+text-align: center;
+letter-spacing: 4px;
+outline: none;
+color: var(–brown);
+transition: border-color 0.2s;
+margin-bottom: 14px;
+}
+.lock-input:focus { border-color: var(–brown); }
+.lock-input.error { border-color: #e74c3c; animation: shake 0.35s; }
+@keyframes shake {
+0%,100% { transform: translateX(0); }
+25% { transform: translateX(-8px); }
+75% { transform: translateX(8px); }
+}
+.lock-submit {
+width: 100%;
+background: var(–brown);
+color: var(–peach);
+border: none;
+border-radius: 12px;
+padding: 13px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 0.95rem;
+font-weight: 700;
+cursor: pointer;
+transition: background 0.2s;
+margin-bottom: 10px;
+}
+.lock-submit:hover { background: var(–brown-light); }
+.lock-cancel {
+background: none;
+border: none;
+color: #aaa;
+font-size: 0.85rem;
+cursor: pointer;
+font-family: ‘DM Sans’, sans-serif;
+padding: 4px;
+}
+.lock-cancel:hover { color: var(–brown-light); }
+
+/* Settlement Tab */
+.settle-card {
+background: var(–white);
+border-radius: var(–radius);
+margin: 0 14px 10px;
+padding: 14px 16px;
+box-shadow: var(–shadow);
+}
+.settle-person-row {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-bottom: 10px;
+}
+.settle-avatar {
+width: 36px;
+height: 36px;
+border-radius: 50%;
+background: var(–peach-dark);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 0.85rem;
+font-weight: 700;
+color: var(–brown);
+flex-shrink: 0;
+}
+.settle-name {
+flex: 1;
+font-weight: 600;
+font-size: 0.9rem;
+color: var(–brown);
+}
+.settle-advance {
+font-size: 0.78rem;
+color: var(–green);
+font-weight: 600;
+white-space: nowrap;
+}
+.settle-inputs {
+display: flex;
+gap: 8px;
+align-items: center;
+}
+.settle-input {
+flex: 1;
+border: 1.5px solid var(–peach-dark);
+border-radius: 10px;
+padding: 9px 12px;
+font-size: 0.9rem;
+font-family: ‘DM Sans’, sans-serif;
+color: var(–brown);
+background: var(–cream);
+outline: none;
+transition: border-color 0.2s;
+}
+.settle-input:focus { border-color: var(–brown-light); }
+.settle-result {
+text-align: right;
+min-width: 90px;
+}
+.settle-result .owes {
+font-weight: 700;
+font-size: 0.95rem;
+color: #e74c3c;
+}
+.settle-result .refund {
+font-weight: 700;
+font-size: 0.95rem;
+color: var(–green);
+}
+.settle-result .settled {
+font-weight: 700;
+font-size: 0.95rem;
+color: #aaa;
+}
+.settle-result .label {
+font-size: 0.68rem;
+color: #aaa;
+}
+
+.save-btn {
+flex: 1;
+background: var(–brown);
+color: var(–peach);
+border: none;
+border-radius: var(–radius);
+padding: 14px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 0.95rem;
+font-weight: 700;
+cursor: pointer;
+box-shadow: var(–shadow);
+transition: all 0.2s;
+letter-spacing: 0.3px;
+}
+.save-btn:hover { background: var(–brown-light); transform: translateY(-1px); }
+.save-btn:active { transform: translateY(0); }
+
+.reset-btn {
+background: transparent;
+color: var(–brown-light);
+border: 2px solid var(–peach-deeper);
+border-radius: var(–radius);
+padding: 14px 18px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 0.9rem;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.2s;
+}
+.reset-btn:hover { border-color: var(–brown-light); color: var(–brown); }
+
+/* Toast */
+.toast {
+position: fixed;
+bottom: 32px;
+left: 50%;
+transform: translateX(-50%) translateY(80px);
+background: #1a2540;
+color: white;
+padding: 12px 24px;
+border-radius: 50px;
+font-size: 0.88rem;
+font-weight: 600;
+z-index: 999;
+transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+white-space: nowrap;
+box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+.add-section-btn {
+display: block;
+margin: 6px 14px 14px;
+width: calc(100% - 28px);
+background: transparent;
+border: 2px dashed var(–peach-deeper);
+border-radius: var(–radius);
+padding: 12px;
+color: var(–brown-light);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 0.88rem;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.2s;
+text-align: center;
+}
+
+.add-section-btn:hover {
+background: var(–peach-dark);
+border-color: var(–brown-light);
+color: var(–brown);
+}
+
+.hidden { display: none !important; }
+
+/* Participant breakdown */
+.participant-breakdown {
+background: var(–cream);
+border-top: 1px solid #f0e0d0;
+padding: 10px 16px;
+}
+
+.breakdown-title {
+font-size: 0.72rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+color: var(–brown-light);
+margin-bottom: 6px;
+}
+
+.breakdown-row {
+display: flex;
+justify-content: space-between;
+font-size: 0.82rem;
+color: #666;
+margin-bottom: 3px;
+}
+
+.breakdown-row.total-row {
+font-weight: 700;
+color: var(–brown);
+border-top: 1px solid #e8d0c0;
+padding-top: 5px;
+margin-top: 3px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="bg-pattern" id="bgPattern"></div>
+<div class="toast" id="toast"></div>
+<div class="lock-overlay hidden" id="lockOverlay">
+  <div class="lock-card">
+    <div style="font-size:2rem;margin-bottom:8px;">🔐</div>
+    <h3>Admin Access</h3>
+    <p>Enter the password to edit the budget</p>
+    <input class="lock-input" id="lockInput" type="password" placeholder="••••" maxlength="20" />
+    <button class="lock-submit" onclick="checkPassword()">Unlock</button>
+    <button class="lock-cancel" onclick="cancelLock()">Cancel</button>
+  </div>
+</div>
+
+<div class="app">
+  <header>
+    <h1>වසන්ත උදානය</h1>
+    <p>with සොමි boyz · 16 People</p>
+  </header>
+
+  <div class="tab-bar">
+    <button class="tab-btn" id="tabAdmin" onclick="switchTab('admin')">⚙️ Admin</button>
+    <button class="tab-btn active" id="tabMyBudget" onclick="switchTab('mybudget')">💰 My Budget</button>
+    <button class="tab-btn" id="tabSettle" onclick="switchTab('settle')">🤝 Settle</button>
+  </div>
+
+  <!-- ADMIN VIEW -->
+
+  <div id="adminView">
+    <div style="display:flex;justify-content:flex-end;padding:0 14px 4px;">
+      <button id="editToggleBtn" onclick="toggleEditMode()" style="background:transparent;border:1.5px solid var(--peach-deeper);border-radius:50px;padding:6px 14px;font-size:0.8rem;font-weight:600;color:var(--brown-light);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;">✏️ Edit</button>
+    </div>
+    <div id="adminSections"></div>
+    <div id="adminEditActions" style="display:none;">
+      <button class="add-section-btn" onclick="addSection()">＋ Add Section</button>
+      <div style="display:flex;gap:10px;margin:0 14px 24px;">
+        <button class="save-btn" onclick="saveData()">💾 Save Changes</button>
+        <button class="reset-btn" onclick="resetData()">↺ Reset to Default</button>
+      </div>
+    </div>
+    <div class="summary-card" id="adminSummary"></div>
+  </div>
+
+  <!-- MY BUDGET VIEW -->
+
+  <div id="myBudgetView" class="hidden">
+    <div class="mb-header">
+      <h2>🍊 What are you joining?</h2>
+      <p>Tap to select what applies to you</p>
+    </div>
+    <div id="mbSectionCards"></div>
+    <div class="mb-total-card">
+      <div class="mb-total-label">Your Total to Pay</div>
+      <div class="mb-total-amount" id="mbTotalAmount">Rs. 0</div>
+      <div class="mb-total-breakdown" id="mbBreakdown"></div>
+    </div>
+  </div>
+  <!-- SETTLE VIEW -->
+  <div id="settleView" class="hidden">
+    <div class="mb-header">
+      <h2>🤝 Settlement</h2>
+      <p>Enter each person's Tricount balance</p>
+    </div>
+    <div id="settleList"></div>
+    <div class="mb-total-card" style="margin-top:4px;">
+      <div class="mb-total-label">Total Collected (Advance)</div>
+      <div class="mb-total-amount" id="settleTotalAdvance" style="font-size:1.6rem;">Rs. 0</div>
+      <div class="mb-total-breakdown" id="settleBreakdown"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========== DATA ==========
+const TOTAL_PEOPLE = 15;
+
+const initialSections = [
+  {
+    id: 's1', icon: '🚐', title: 'Transport', sharedBy: 15, locked: false,
+    items: [{ id: 'i1', name: 'AC Bus Hire', amount: 30000 }]
+  },
+  {
+    id: 's2', icon: '🏡', title: 'Villa Day Out', sharedBy: 15, locked: false,
+    items: [{ id: 'i2', name: 'Per person', amount: 4000, perPerson: true }]
+  },
+  {
+    id: 's3', icon: '🍹', title: 'Liquor', sharedBy: 15, locked: false,
+    items: [
+      { id: 'i3',  name: 'Red Rum', amount: 5800 },
+      { id: 'i4',  name: 'White Rum x2', amount: 11600 },
+      { id: 'i5',  name: 'Roskaa Vodka x2', amount: 9600 },
+      { id: 'i6',  name: 'Cranberry Juice x4', amount: 6600 },
+      { id: 'i8',  name: 'Sprite 1.5L x3 | 2L x1', amount: 1508 },
+      { id: 'i20', name: 'Coca Cola 2L', amount: 500 },
+      { id: 'i21', name: 'Jalapeño 350g', amount: 1985 },
+      { id: 'i22', name: 'Lemon', amount: 186.32 },
+      { id: 'i23', name: 'Minchi', amount: 100 },
+    ]
+  },
+  {
+    id: 's4', icon: '🍉', title: 'Fruits', sharedBy: 15, locked: false,
+    items: [
+      { id: 'i10', name: 'Oranges', amount: 1100 },
+      { id: 'i11', name: 'Watermelon', amount: 483.20 },
+      { id: 'i12', name: 'Apples', amount: 3290 },
+      { id: 'i13', name: 'Grapes', amount: 1147.50 },
+    ]
+  },
+  {
+    id: 's5', icon: '🍗', title: 'Bites / BBQ', sharedBy: 15, locked: false,
+    items: [
+      { id: 'i16', name: 'Chicken 2kg', amount: 2780 },
+      { id: 'i17', name: 'Pork 1kg', amount: 2890 },
+      { id: 'i18', name: 'Sausages 2kg', amount: 3200 },
+      { id: 'i24', name: 'Mixer 1kg & Masala Ratakaju 500g', amount: 1900 },
+      { id: 'i25', name: 'Eggs', amount: 565 },
+    ]
+  },
+  {
+    id: 's6', icon: '🚬', title: 'Cigarettes', sharedBy: 15, locked: false,
+    items: [
+      { id: 'i26', name: 'Cigarette Boxes x5', amount: 8900 },
+    ]
+  },
+  {
+    id: 's7', icon: '🌿', title: 'Joints', sharedBy: 15, locked: false, items: []
+  },
+  {
+    id: 's8', icon: '🥪', title: 'Breakfast', sharedBy: 15, locked: false,
+    items: [
+      { id: 'i27', name: 'Sandwich Bread 450g', amount: 310 },
+      { id: 'i28', name: 'Sandwich Bread 750g', amount: 410 },
+    ]
+  },
+  {
+    id: 's9', icon: '🎉', title: 'Events', sharedBy: 15, locked: false,
+    items: [
+      { id: 'i29', name: 'Wheat Flour 1kg', amount: 220 },
+      { id: 'i30', name: 'Balloons x20', amount: 240 },
+    ]
+  },
+];
+
+const participants = Array.from({ length: 16 }, (_, i) => ({
+  id: 'p' + i,
+  name: 'Person ' + (i + 1),
+  emoji: ['🐯','🦁','🐻','🐼','🦊','🐺','🦝','🐸','🦋','🌸','🌺','🍀','⭐','🌙','🌊','🔥'][i]
+}));
+
+let sections = JSON.parse(JSON.stringify(initialSections));
+let selectedParticipant = null;
+let currentTab = 'mybudget';
+let idCounter = 1000;
+
+// ========== STORAGE ==========
+const STORAGE_KEY = 'nytrip_budget_v1';
+
+function saveData() {
+  try {
+    const payload = { sections, idCounter };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    showToast('✅ Saved successfully!');
+  } catch(e) {
+    showToast('❌ Save failed');
+  }
+}
+
+async function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const payload = JSON.parse(raw);
+      sections = payload.sections;
+      idCounter = payload.idCounter || 1000;
+      showToast('📂 Loaded saved data');
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
+function resetData() {
+  if (!confirm('Reset all data to defaults? This cannot be undone.')) return;
+  sections = JSON.parse(JSON.stringify(initialSections));
+  idCounter = 1000;
+  mbSelected = {};
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  renderAdmin();
+  renderMyBudget();
+  showToast('↺ Reset to defaults');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ========== BACKGROUND ==========
+function createBg() {
+  const emojis = ['🍹','🍸','🥂','🍾','🎉','🥳','🌴','🌺','🎊','🏝️'];
+  const container = document.getElementById('bgPattern');
+  for (let i = 0; i < 28; i++) {
+    const span = document.createElement('span');
+    span.textContent = emojis[i % emojis.length];
+    span.style.left = (Math.random() * 100) + '%';
+    span.style.top = (Math.random() * 100 + 10) + 'vh';
+    span.style.animationDuration = (14 + Math.random() * 20) + 's';
+    span.style.animationDelay = (-Math.random() * 20) + 's';
+    span.style.fontSize = (1.2 + Math.random() * 1.4) + 'rem';
+    container.appendChild(span);
+  }
+}
+
+// ========== HELPERS ==========
+function fmt(n) { return 'Rs ' + Math.round(n).toLocaleString(); }
+
+function sectionTotal(sec) {
+  return sec.items.reduce((sum, item) => {
+    if (item.perPerson) return sum + item.amount * sec.sharedBy;
+    return sum + item.amount;
+  }, 0);
+}
+
+function perPersonShare(sec) {
+  if (sec.sharedBy === 0) return 0;
+  if (sec.items.length === 1 && sec.items[0].perPerson) return sec.items[0].amount;
+  return sectionTotal(sec) / sec.sharedBy;
+}
+
+function grandTotal() {
+  return sections.reduce((sum, sec) => sum + sectionTotal(sec), 0);
+}
+
+function myTotal() {
+  if (!selectedParticipant) return 0;
+  return sections.reduce((sum, sec) => sum + perPersonShare(sec), 0);
+}
+
+// ========== RENDER ADMIN ==========
+function renderAdmin() {
+  const container = document.getElementById('adminSections');
+  container.innerHTML = '';
+
+  // Update edit toggle button appearance
+  const btn = document.getElementById('editToggleBtn');
+  if (btn) {
+    btn.textContent = editMode ? '🔒 Lock' : '✏️ Edit';
+    btn.style.borderColor = editMode ? '#27ae60' : 'var(--peach-deeper)';
+    btn.style.color = editMode ? '#27ae60' : 'var(--brown-light)';
+  }
+  // Show/hide edit-only actions
+  const editActions = document.getElementById('adminEditActions');
+  if (editActions) editActions.style.display = editMode ? 'block' : 'none';
+
+  sections.forEach(sec => {
+    const card = document.createElement('div');
+    card.className = 'section-card';
+
+    const total = sectionTotal(sec);
+    const perPerson = perPersonShare(sec);
+
+    const iconEl = editMode
+      ? `<span class="section-icon" title="Click to change emoji" onclick="changeIcon('${sec.id}')" style="cursor:pointer">${sec.icon}</span>`
+      : `<span class="section-icon">${sec.icon}</span>`;
+
+    const titleEl = editMode
+      ? `<input class="section-title" value="${sec.title}" onchange="updateTitle('${sec.id}', this.value)" placeholder="Section name" />`
+      : `<div class="section-title" style="cursor:default">${sec.title}</div>`;
+
+    const sharedEl = editMode
+      ? `<div style="display:flex;align-items:center;gap:6px;margin-top:3px;">
+           <span style="font-size:0.72rem;color:#a0522d;">Shared by:</span>
+           <input class="shared-count-input" type="number" min="1" max="16" value="${sec.sharedBy}" onchange="updateShared('${sec.id}', this.value)" />
+           <span style="font-size:0.72rem;color:#a0522d;">· ${fmt(perPerson)}/person</span>
+         </div>`
+      : `<div style="font-size:0.72rem;color:#a0522d;margin-top:2px;">Shared by ${sec.sharedBy} · ${fmt(perPerson)}/person</div>`;
+
+    const itemsHtml = sec.items.map(item => {
+      if (editMode) {
+        return `<div class="item-row">
+          <input class="item-name" value="${item.name}" onchange="updateItemName('${sec.id}','${item.id}',this.value)" ${item.locked ? 'readonly style="color:#aaa"' : ''} />
+          <span style="font-size:0.8rem;color:#bbb;margin-right:2px;">Rs</span>
+          <input class="item-amount" type="number" value="${item.amount}" onchange="updateItemAmount('${sec.id}','${item.id}',this.value)" ${item.locked ? 'readonly style="color:#aaa"' : ''} />
+          ${!item.locked ? `<button class="del-btn" onclick="deleteItem('${sec.id}','${item.id}')">✕</button>` : ''}
+        </div>`;
+      } else {
+        return `<div class="item-row">
+          <span class="item-name" style="color:#555">${item.name}</span>
+          <span style="font-size:0.87rem;font-weight:600;color:var(--brown)">Rs ${item.amount.toLocaleString()}</span>
+        </div>`;
+      }
+    }).join('');
+
+    const addRowHtml = (editMode && !sec.locked) ? `
+      <div class="add-item-row">
+        <input type="text" placeholder="Item name" id="newName-${sec.id}" />
+        <input type="number" placeholder="Amount" id="newAmt-${sec.id}" style="width:90px;border:1px dashed #e8a87c;border-radius:8px;padding:6px 8px;font-family:inherit;outline:none;background:#fff8f3;color:#6b3a2a;" />
+        <button class="add-btn" onclick="addItem('${sec.id}')">Add</button>
+      </div>` : '';
+
+    card.innerHTML = `
+      <div class="section-header">
+        ${iconEl}
+        <div class="section-title-area">
+          ${titleEl}
+          ${sharedEl}
+        </div>
+        <div style="text-align:right">
+          <div class="section-total">${fmt(total)}</div>
+        </div>
+      </div>
+      <div class="items-list">${itemsHtml}</div>
+      ${addRowHtml}
+    `;
+
+    container.appendChild(card);
+  });
+
+  renderAdminSummary();
+  if (currentTab === 'mybudget') renderMyBudget();
+}
+
+function renderAdminSummary() {
+  const summary = document.getElementById('adminSummary');
+  const total = grandTotal();
+  const perPerson = total / TOTAL_PEOPLE;
+
+  let rows = sections.map(sec => {
+    const pp = perPersonShare(sec);
+    return `<div class="summary-row"><span>${sec.icon} ${sec.title}</span><span>${fmt(pp)}/person</span></div>`;
+  }).join('');
+
+  summary.innerHTML = `
+    <h3>📊 Budget Summary</h3>
+    ${rows}
+    <div class="summary-total">
+      <span>Total / Person</span>
+      <span>${fmt(perPerson)}</span>
+    </div>
+  `;
+}
+
+// ========== MY BUDGET STATE ==========
+// Track which optional sections are opted in
+let mbSelected = {}; // secId -> true/false
+
+function initMbSelected() {
+  sections.forEach(sec => {
+    if (!(sec.id in mbSelected)) {
+      mbSelected[sec.id] = sec.locked; // locked = auto-included
+    }
+  });
+}
+
+// ========== RENDER MY BUDGET ==========
+function renderMyBudget() {
+  initMbSelected();
+  const container = document.getElementById('mbSectionCards');
+  container.innerHTML = '';
+
+  sections.forEach(sec => {
+    const pp = perPersonShare(sec);
+    const isLocked = sec.locked;
+    const isSelected = mbSelected[sec.id];
+
+    const card = document.createElement('div');
+    card.className = 'mb-section-card' + (isLocked ? ' locked' : (isSelected ? ' selected' : ''));
+
+    const subText = isLocked
+      ? `<span class="mb-section-sub locked-sub">✅ Included for everyone</span>`
+      : `<span class="mb-section-sub">Tap to include / exclude</span>`;
+
+    const toggleHtml = isLocked
+      ? `<div class="mb-toggle">✓</div>`
+      : `<div class="mb-toggle" id="toggle-${sec.id}">${isSelected ? '✓' : ''}</div>`;
+
+    const stepperHtml = (!isLocked && isSelected)
+      ? `<div class="mb-stepper" id="stepper-${sec.id}">
+           <button class="mb-stepper-btn" id="stepDown-${sec.id}">−</button>
+           <span class="mb-stepper-count">${sec.sharedBy} 👤</span>
+           <button class="mb-stepper-btn" id="stepUp-${sec.id}">+</button>
+         </div>`
+      : `<div style="font-size:0.72rem;color:#bbb;margin-top:4px;">${isLocked ? '' : sec.sharedBy + ' people'}</div>`;
+
+    card.innerHTML = `
+      <div class="mb-section-icon">${sec.icon}</div>
+      <div class="mb-section-info">
+        <div class="mb-section-title">${sec.title}</div>
+        ${subText}
+        ${stepperHtml}
+      </div>
+      <div class="mb-section-right">
+        <div class="mb-share-amount">Rs. ${Math.round(pp).toLocaleString()}</div>
+        <div class="mb-share-label">your share</div>
+      </div>
+      ${toggleHtml}
+    `;
+
+    // Toggle on card click (but not on stepper buttons)
+    if (!isLocked) {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.mb-stepper')) return;
+        toggleMbSection(sec.id);
+      });
+    }
+
+    container.appendChild(card);
+
+    // Attach stepper events after DOM insertion
+    if (!isLocked && isSelected) {
+      document.getElementById('stepDown-' + sec.id).addEventListener('click', (e) => {
+        e.stopPropagation();
+        updateMbSharedBy(sec.id, -1);
+      });
+      document.getElementById('stepUp-' + sec.id).addEventListener('click', (e) => {
+        e.stopPropagation();
+        updateMbSharedBy(sec.id, 1);
+      });
+    }
+  });
+
+  updateMbTotal();
+}
+
+function toggleMbSection(secId) {
+  mbSelected[secId] = !mbSelected[secId];
+  renderMyBudget();
+}
+
+function updateMbSharedBy(secId, delta) {
+  const sec = sections.find(s => s.id === secId);
+  sec.sharedBy = Math.max(1, Math.min(16, sec.sharedBy + delta));
+  renderMyBudget();
+}
+
+function updateMbTotal() {
+  let total = 0;
+  let breakdownRows = '';
+
+  sections.forEach(sec => {
+    if (mbSelected[sec.id]) {
+      const pp = perPersonShare(sec);
+      total += pp;
+      if (pp > 0) {
+        breakdownRows += `
+          <div class="mb-breakdown-row">
+            <span>${sec.icon} ${sec.title}</span>
+            <span>Rs. ${Math.round(pp).toLocaleString()}</span>
+          </div>`;
+      }
+    }
+  });
+
+  document.getElementById('mbTotalAmount').textContent = 'Rs. ' + Math.round(total).toLocaleString();
+  document.getElementById('mbBreakdown').innerHTML = breakdownRows;
+}
+
+// ========== MUTATIONS ==========
+function updateTitle(secId, val) {
+  sections.find(s => s.id === secId).title = val;
+  renderAdmin();
+}
+
+function updateShared(secId, val) {
+  const v = Math.max(1, Math.min(16, parseInt(val) || 1));
+  sections.find(s => s.id === secId).sharedBy = v;
+  renderAdmin();
+}
+
+function updateItemName(secId, itemId, val) {
+  const sec = sections.find(s => s.id === secId);
+  sec.items.find(i => i.id === itemId).name = val;
+  renderAdmin();
+}
+
+function updateItemAmount(secId, itemId, val) {
+  const sec = sections.find(s => s.id === secId);
+  sec.items.find(i => i.id === itemId).amount = parseFloat(val) || 0;
+  renderAdmin();
+}
+
+function deleteItem(secId, itemId) {
+  const sec = sections.find(s => s.id === secId);
+  sec.items = sec.items.filter(i => i.id !== itemId);
+  renderAdmin();
+}
+
+function addItem(secId) {
+  const nameEl = document.getElementById('newName-' + secId);
+  const amtEl = document.getElementById('newAmt-' + secId);
+  const name = nameEl.value.trim();
+  const amount = parseFloat(amtEl.value) || 0;
+  if (!name) return;
+  const sec = sections.find(s => s.id === secId);
+  sec.items.push({ id: 'i' + (++idCounter), name, amount });
+  renderAdmin();
+}
+
+function changeIcon(secId) {
+  const emojis = ['🚐','🏡','🍹','🍉','🍗','🚬','🌿','🎸','🎵','🎮','💊','🍕','🍔','🧃','☕','🍰','🎂','🏊','🏋️','🎯','💰','🎁','🧧'];
+  const sec = sections.find(s => s.id === secId);
+  const idx = (emojis.indexOf(sec.icon) + 1) % emojis.length;
+  sec.icon = emojis[idx];
+  renderAdmin();
+}
+
+function addSection() {
+  idCounter++;
+  sections.push({
+    id: 's' + idCounter, icon: '📦', title: 'New Section', sharedBy: 16, locked: false, items: []
+  });
+  renderAdmin();
+}
+
+// ========== SETTLEMENT ==========
+const settleData = [
+  { name: 'Krish',              advance: 5000, tricount: 0 },
+  { name: 'Roy',                advance: 5000, tricount: 0 },
+  { name: 'Kandula',            advance: 6000, tricount: 0 },
+  { name: 'Abilash',            advance: 5000, tricount: 0 },
+  { name: 'Abishek',            advance: 5000, tricount: 0 },
+  { name: 'Dulaj',              advance: 5000, tricount: 0 },
+  { name: 'Kanduge Malli',      advance: 5000, tricount: 0 },
+  { name: 'Thisara',            advance: 5000, tricount: 0 },
+  { name: 'Hasini',             advance: 5000, tricount: 0 },
+  { name: 'Pasindu',            advance: 5000, tricount: 0 },
+  { name: 'Arunalu',            advance: 5000, tricount: 0 },
+  { name: 'Ganuka',             advance: 0,    tricount: 0 },
+  { name: "Dulaj's GF",         advance: 0,    tricount: 0 },
+  { name: 'Nipun',              advance: 5000, tricount: 0 },
+  { name: 'Kanduge Dewani Malli',advance: 0,   tricount: 0 },
+];
+
+function renderSettle() {
+  const container = document.getElementById('settleList');
+  container.innerHTML = '';
+
+  const totalAdvance = settleData.reduce((s, p) => s + p.advance, 0);
+
+  settleData.forEach((person, idx) => {
+    const diff = person.tricount - person.advance; // positive = owes, negative = refund
+    let resultHtml = '';
+    if (person.tricount === 0) {
+      resultHtml = `<div class="settle-result"><div class="settled">—</div><div class="label">enter balance</div></div>`;
+    } else if (diff > 0) {
+      resultHtml = `<div class="settle-result"><div class="owes">Rs ${Math.round(diff).toLocaleString()}</div><div class="label">needs to pay</div></div>`;
+    } else if (diff < 0) {
+      resultHtml = `<div class="settle-result"><div class="refund">Rs ${Math.round(Math.abs(diff)).toLocaleString()}</div><div class="label">gets refund</div></div>`;
+    } else {
+      resultHtml = `<div class="settle-result"><div class="settled">✅ Settled</div></div>`;
+    }
+
+    const card = document.createElement('div');
+    card.className = 'settle-card';
+    card.innerHTML = `
+      <div class="settle-person-row">
+        <div class="settle-avatar">${person.name[0]}</div>
+        <div class="settle-name">${person.name}</div>
+        <div class="settle-advance">Paid Rs ${person.advance.toLocaleString()}</div>
+      </div>
+      <div class="settle-inputs">
+        <input class="settle-input" type="number" placeholder="Tricount balance (Rs)" value="${person.tricount || ''}"
+          oninput="updateTricount(${idx}, this.value)" />
+        ${resultHtml}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  // Summary
+  const totalCollected = settleData.reduce((s, p) => s + p.advance, 0);
+  const totalTricount = settleData.reduce((s, p) => s + p.tricount, 0);
+  document.getElementById('settleTotalAdvance').textContent = 'Rs. ' + totalCollected.toLocaleString();
+
+  let breakdown = '';
+  if (totalTricount > 0) {
+    const totalOwed = settleData.reduce((s, p) => s + Math.max(0, p.tricount - p.advance), 0);
+    const totalRefund = settleData.reduce((s, p) => s + Math.max(0, p.advance - p.tricount), 0);
+    breakdown = `
+      <div class="mb-breakdown-row"><span>Total Tricount expenses</span><span>Rs. ${Math.round(totalTricount).toLocaleString()}</span></div>
+      <div class="mb-breakdown-row"><span>Total to collect</span><span style="color:#e74c3c">Rs. ${Math.round(totalOwed).toLocaleString()}</span></div>
+      <div class="mb-breakdown-row"><span>Total to refund</span><span style="color:#27ae60">Rs. ${Math.round(totalRefund).toLocaleString()}</span></div>
+    `;
+  }
+  document.getElementById('settleBreakdown').innerHTML = breakdown;
+}
+
+function updateTricount(idx, val) {
+  settleData[idx].tricount = parseFloat(val) || 0;
+  renderSettle();
+}
+
+// ========== ADMIN LOCK ==========
+const ADMIN_PASS = '1290';
+let editMode = false;
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('adminView').classList.toggle('hidden', tab !== 'admin');
+  document.getElementById('myBudgetView').classList.toggle('hidden', tab !== 'mybudget');
+  document.getElementById('settleView').classList.toggle('hidden', tab !== 'settle');
+  document.getElementById('tabAdmin').classList.toggle('active', tab === 'admin');
+  document.getElementById('tabMyBudget').classList.toggle('active', tab === 'mybudget');
+  document.getElementById('tabSettle').classList.toggle('active', tab === 'settle');
+  if (tab === 'mybudget') renderMyBudget();
+  if (tab === 'admin') renderAdmin();
+  if (tab === 'settle') renderSettle();
+}
+
+function showLock() {
+  const overlay = document.getElementById('lockOverlay');
+  const input = document.getElementById('lockInput');
+  input.value = '';
+  overlay.classList.remove('hidden');
+  setTimeout(() => input.focus(), 100);
+  input.onkeydown = (e) => { if (e.key === 'Enter') checkPassword(); };
+}
+
+function checkPassword() {
+  const input = document.getElementById('lockInput');
+  if (input.value === ADMIN_PASS) {
+    editMode = true;
+    document.getElementById('lockOverlay').classList.add('hidden');
+    input.value = '';
+    renderAdmin();
+    showToast('✏️ Edit mode enabled');
+  } else {
+    input.classList.add('error');
+    input.value = '';
+    setTimeout(() => input.classList.remove('error'), 500);
+  }
+}
+
+function cancelLock() {
+  document.getElementById('lockOverlay').classList.add('hidden');
+  document.getElementById('lockInput').value = '';
+}
+
+function toggleEditMode() {
+  if (editMode) {
+    editMode = false;
+    renderAdmin();
+    showToast('🔒 Edit mode disabled');
+  } else {
+    showLock();
+  }
+}
+
+// ========== INIT ==========
+createBg();
+loadData().then(() => {
+  renderAdmin();
+  initMbSelected();
+  switchTab('mybudget');
+});
+</script>
+
+</body>
+</html>
