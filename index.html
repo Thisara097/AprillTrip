@@ -875,7 +875,28 @@
   </div>
 </div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+// ========== FIREBASE CONFIG ==========
+// Replace these values with your own from console.firebase.google.com
+// Steps: New project → Add Web App → Copy config → Enable Realtime Database (test mode)
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getDatabase(firebaseApp);
+const BUDGET_REF = ref(db, 'budget');
+const SETTLE_REF = ref(db, 'settle');
+
 // ========== DATA ==========
 const TOTAL_PEOPLE = 15;
 
@@ -972,23 +993,30 @@ let currentTab = 'mybudget';
 let idCounter = 1000;
 
 // ========== STORAGE ==========
-const STORAGE_KEY = 'nytrip_budget_v1';
+let _ignoreNextBudgetSync = false;
 
-function saveData() {
+async function saveData() {
   try {
-    const payload = { sections, idCounter };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    _ignoreNextBudgetSync = true;
+    await set(BUDGET_REF, { sections, idCounter });
     showToast('✅ Saved successfully!');
   } catch(e) {
+    _ignoreNextBudgetSync = false;
     showToast('❌ Save failed');
   }
 }
 
+async function saveTricounts() {
+  try {
+    await set(SETTLE_REF, settleData.map(p => p.tricount));
+  } catch(e) {}
+}
+
 async function loadData() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const payload = JSON.parse(raw);
+    const snapshot = await get(BUDGET_REF);
+    if (snapshot.exists()) {
+      const payload = snapshot.val();
       sections = payload.sections;
       idCounter = payload.idCounter || 1000;
       showToast('📂 Loaded saved data');
@@ -998,12 +1026,12 @@ async function loadData() {
   return false;
 }
 
-function resetData() {
+async function resetData() {
   if (!confirm('Reset all data to defaults? This cannot be undone.')) return;
   sections = JSON.parse(JSON.stringify(initialSections));
   idCounter = 1000;
   mbSelected = {};
-  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  await saveData();
   renderAdmin();
   renderMyBudget();
   showToast('↺ Reset to defaults');
@@ -1409,6 +1437,7 @@ function renderSettle() {
 function updateTricount(idx, val) {
   settleData[idx].tricount = parseFloat(val) || 0;
   renderSettle();
+  saveTricounts();
 }
 
 // ========== ADMIN LOCK ==========
@@ -1466,6 +1495,42 @@ function toggleEditMode() {
     showLock();
   }
 }
+
+// ========== REAL-TIME SYNC ==========
+onValue(BUDGET_REF, (snapshot) => {
+  if (!snapshot.exists()) return;
+  if (_ignoreNextBudgetSync) { _ignoreNextBudgetSync = false; return; }
+  const payload = snapshot.val();
+  sections = payload.sections;
+  idCounter = payload.idCounter || 1000;
+  renderAdmin();
+  renderMyBudget();
+  showToast('🔄 Synced');
+});
+
+onValue(SETTLE_REF, (snapshot) => {
+  if (!snapshot.exists()) return;
+  const tricounts = snapshot.val();
+  tricounts.forEach((val, i) => { if (settleData[i]) settleData[i].tricount = val; });
+  if (currentTab === 'settle') renderSettle();
+});
+
+// ========== WINDOW EXPORTS (required for onclick in module script) ==========
+window.saveData = saveData;
+window.resetData = resetData;
+window.switchTab = switchTab;
+window.toggleEditMode = toggleEditMode;
+window.checkPassword = checkPassword;
+window.cancelLock = cancelLock;
+window.addSection = addSection;
+window.addItem = addItem;
+window.deleteItem = deleteItem;
+window.changeIcon = changeIcon;
+window.updateTitle = updateTitle;
+window.updateShared = updateShared;
+window.updateItemName = updateItemName;
+window.updateItemAmount = updateItemAmount;
+window.updateTricount = updateTricount;
 
 // ========== INIT ==========
 createBg();
